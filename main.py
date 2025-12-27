@@ -17,9 +17,16 @@ try:
                     content_file.append('--------- Начало файла ----------')
                     content_file.append(file.read())
                     content_file.append('--------- Конец файла ----------')
-
                 for line in content_file:
                     print(line)
+            if input_num == 2:
+                print(f'Что записать в файл "{file_name}"')
+                print('Введите текст (нажмите CTRL + D что бы остановить ввод): ')
+                content_file = list(map(str, sys.stdin))
+                with open(file_name, 'a', encoding='utf-8') as file:
+                    for line in content_file:
+                        result = line.strip('\n')
+                        val = file.write(result + '\n')
         except FileNotFoundError:
             print(f'Файл с именем: "{file_name}" отсутствовал')
 
