@@ -8,3 +8,13 @@ if input_ == 2:
     print(f'Что сделать с файлом "{file_name}"')
     print('1) прочитать; 2) изменить')
     input_num = int(input('Выберите число, соответсвующее вашему выбору (1 или 2): '))
+    if input_num == 1:
+        content_file = []
+        with open(file_name, 'r', encoding='utf-8') as file:
+            print(f'Содержание файла "{file_name}":')
+            content_file.append('--------- Начало файла ----------')
+            content_file.append(file.read())
+            content_file.append('--------- Конец файла ----------')
+
+        for line in content_file:
+            print(line)
