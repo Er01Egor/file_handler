@@ -133,10 +133,12 @@ class FileHandler(QWidget):
 
         self.name_f = ''
 
-        #self.create_file_button.clicked.connect(self.create_file)
-        #self.open_file_button.clicked.connect(self.choose_file)
+        self.create_file_button.clicked.connect(self.create_file)
+        self.open_file_button.clicked.connect(self.choose_file)
         self.read_file_button.clicked.connect(self.file_open)
-        #self.delete_button.clicked.connect(self.delete_text)
+        # self.delete_button.clicked.connect(self.delete_text)
+        self.save_button.clicked.connect(self.create_file)
+        # self.correct_file_button.clicked.connect(self.correct_text)
 
     def file_open(self):
 
@@ -145,6 +147,7 @@ class FileHandler(QWidget):
             with open(file_name, 'r', encoding='utf-8') as file:
                 content_file = file.read()
 
+                self.file_content.setReadOnly(True)
                 self.file_content.setText(content_file)
 
         except FileNotFoundError:
@@ -152,6 +155,30 @@ class FileHandler(QWidget):
 
         except Exception as err:
             print(f'Произошла ошибка: {err}')
+
+    def create_file(self):
+        try:
+            file_name = self.file_names.text()
+
+            full_content = self.file_content.toPlainText()
+
+            with open(file_name, 'w', encoding='utf-8') as file:
+
+                lines = full_content.splitlines()
+
+                for line in lines:
+                    cleaned_line = line.strip()
+
+                    file.write(cleaned_line + '\n')
+        except Exception as err:
+            print(f'Произошла ошибка: {err}')
+
+    def choose_file(self):
+        self.file_names.clear()
+        self.fname = QFileDialog.getOpenFileName(
+            self, 'Выбрать файл')[0]
+        self.name_f += self.fname
+        self.file_names.setText(self.name_f)
 
 
 if __name__ == "__main__":
