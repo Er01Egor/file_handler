@@ -131,6 +131,28 @@ class FileHandler(QWidget):
         f = io.StringIO(template)
         uic.loadUi(f, self)
 
+        self.name_f = ''
+
+        #self.create_file_button.clicked.connect(self.create_file)
+        #self.open_file_button.clicked.connect(self.choose_file)
+        self.read_file_button.clicked.connect(self.file_open)
+        #self.delete_button.clicked.connect(self.delete_text)
+
+    def file_open(self):
+
+        try:
+            file_name = self.name_f
+            with open(file_name, 'r', encoding='utf-8') as file:
+                content_file = file.read()
+
+                self.file_content.setText(content_file)
+
+        except FileNotFoundError:
+            print(f'Файл с именем: "{file_name}" отсутствовал')
+
+        except Exception as err:
+            print(f'Произошла ошибка: {err}')
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
